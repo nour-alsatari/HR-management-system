@@ -1,8 +1,10 @@
 'use strict';
 
+
 let level = ["Junior", "Mid-senior", "Senior"];
 let department = ["Administration", "Marketing", "Development", "Finance"];
 let allEmployeesArr = [];
+
 
 function Employee(id, fullName, department, level) {
     this.id = id;
@@ -16,6 +18,7 @@ function Employee(id, fullName, department, level) {
 }
 
 Employee.prototype.calculateSalary = function () {
+
     let salaryWithoutTax; // Variables declared inside a { } block cannot be accessed from outside the block
     if (this.level.toLowerCase() == "senior") {
         salaryWithoutTax = Math.floor(Math.random() * (1500 - 2000 + 1) + 1500)
