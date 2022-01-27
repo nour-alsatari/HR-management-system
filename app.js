@@ -6,13 +6,13 @@ let department = ["Administration", "Marketing", "Development", "Finance"];
 let allEmployeesArr = [];
 
 
-function Employee(id, fullName, department, level) {
-    this.id = id;
+function Employee(fullName, department, level) {
     this.fullName = fullName;
     this.department = department;
     this.level = level;
     this.salary = 0 // i have to write the salary here because when i check the employee object i want it to be part of its properties
-    this.image = `./assets/${id}.png`;
+    this.image = `./assets/.png`;
+    this.id = uniqueID();
     allEmployeesArr.push(this);
 
 }
@@ -35,52 +35,62 @@ Employee.prototype.calculateSalary = function () {
 
 Employee.prototype.render = function () {
     document.write(`<h4>The employee name is ${this.fullName} 
-    and their salary is ${this.salary} </h4>`)
+    and their salary is ${this.salary}
+    and their id is ${this.id} </h4>`)
 
     // console.log(allEmployeesArr[i].render()) ==> undefined because it doesn't return anything
 }
 
-let ghaziSamer = new Employee("1000", "Ghazi Samer", department[0], level[2]);
-let lanaAli = new Employee("1001", "Lana Ali", department[3], level[2]);
-let tamaraAyoub = new Employee("1002", "Tamara Ayoub", department[1], level[2]);
-let safiWalid = new Employee("1003", "Safi Walid", department[0], level[1]);
-let omarZaid = new Employee("1004", "Omar Zaid", department[2], level[2]);
-let ranaSaleh = new Employee("1005", "Rana Saleh", department[2], level[0]);
-let hadiAhmad = new Employee("1006", "Hadi Ahmad", department[3], level[1]);
+let ghaziSamer = new Employee("Ghazi Samer", department[0], level[2]);
+let lanaAli = new Employee("Lana Ali", department[3], level[2]);
+let tamaraAyoub = new Employee("Tamara Ayoub", department[1], level[2]);
+let safiWalid = new Employee("Safi Walid", department[0], level[1]);
+let omarZaid = new Employee("Omar Zaid", department[2], level[2]);
+let ranaSaleh = new Employee("Rana Saleh", department[2], level[0]);
+let hadiAhmad = new Employee("Hadi Ahmad", department[3], level[1]);
 
+function uniqueID() {
+    const arr = [];
+    while (arr.length < 8) {
+        const r = Math.floor(1000 + Math.random() * 9000);
+        if (arr.indexOf(r) === -1) {
+            arr.push(r);
+        }
+    }
+    console.log(arr);
+    return arr;
+}
 
 for (let i = 0; i < allEmployeesArr.length; i++) {
     allEmployeesArr[i].calculateSalary();
     allEmployeesArr[i].render();
+    uniqueID(allEmployeesArr[i]);
 }
 
-//
-// function uniqueID() {
-//     const arr = [];
-//     while (arr.length < 8) {
-//         const val = Math.floor(1000 + Math.random() * 9000);
-//         if (arr.indexOf(r) === -1) {
-//             arr.push(r);
-//         }
-//     }
-// }
+let formElement = document.getElementById("form");
 
-// let form = document.getElementById("form");
-// form.addEventListener("submit", handleSubmit)
+formElement.addEventListener("submit", handleSubmit)
 
-// function handleSubmit(event) {
-//     event.preventDefault();
-//     let fullName = event.target.fullName.value;
-//     let image = event.target.empImg.value;
-//     let department = event.target.department.value;
-//     let level = event.target.level.value;
+function handleSubmit(event) {
+    event.preventDefault();// the default behavior is refresh and i want to display data
+    //event.target.idofTheInput.value
+    let fullName = event.target.fullName.value;
+    let department = event.target.department.value;
+    let level = event.target.level.value;
+    let image = event.target.imageUrl.value;
 
-//     let newEmployee = new Employee(0, fullName, department, level, imageUrl);
+// getting and knowing what the user entered. add event listener first and then get for each input what they entered
+// now that i got all the user input; i need to create a new object instance of my constructor 
 
-//     uniqueID(newEmployee);
-//     newEmployee.render();
+let newEmployee = new Employee (fullName, department ,level);
+newEmployee.calculateSalary();
+uniqueID(newEmployee);
+newEmployee.render();
 
-// }Employee.prototype.render = function () {
+} 
+
+
+//Employee.prototype.render = function () {
 //     let div = document.createElement("div");
 //     let employeeImage = document.createElement("img");
 //     let employeeName = document.createElement("h4");
