@@ -3,7 +3,9 @@
 
 let level = ["Junior", "Mid-senior", "Senior"];
 let department = ["Administration", "Marketing", "Development", "Finance"];
-let allEmployeesArr = [];
+let allEmployeesArr = []; // instead of declaring a variable i can do the best practice which is creating a property in the global scope
+// Employee.allEmployeesArr =[]; this is a property
+
 let formElement = document.getElementById("form");
 let employeesDiv = document.getElementById("employeesDiv") // this is where i want the info to be inside
 
@@ -16,11 +18,12 @@ function Employee(fullName, department, level, image) {
     this.salary = 0 // i have to write the salary here because when i check the employee object i want it to be part of its properties
     this.image = image;
     this.id = uniqueID();
-    allEmployeesArr.push(this);
+    allEmployeesArr.push(this); // Employee.allEmployeesArr.push(this);
+    // i can't replace it with     This.allEmployeesArr.push(this); because the property is for the constructor itself NOT the instances
 
 }
 
-Employee.prototype.calculateSalary = function () {
+ Employee.prototype.calculateSalary = function () {
 
     let salaryWithoutTax; // Variables declared inside a { } block using let cannot be accessed from outside the block
     if (this.level.toLowerCase() == "senior") {
@@ -41,9 +44,9 @@ Employee.prototype.render = function () {
     // and their salary is ${this.salary}
     // and their id is ${this.id} </h4>`) //not needed anymore
     let employeePic = document.createElement("img");
-    employeePic.setAttribute("src" , this.image);
+    employeePic.setAttribute("src", this.image);
     employeesDiv.appendChild(employeePic);
-    
+
     let employeeName = document.createElement("h4");
     employeeName.textContent = `Name: ${this.fullName}`;
     employeesDiv.appendChild(employeeName);
@@ -75,22 +78,51 @@ let ranaSaleh = new Employee("Rana Saleh", department[2], level[0], './assets/Ra
 let hadiAhmad = new Employee("Hadi Ahmad", department[3], level[1], './assets/Hadi.jpg');
 
 function uniqueID() {
-    const arr = [];
-    while (arr.length < 8) {
+ 
         const r = Math.floor(1000 + Math.random() * 9000);
-        if (arr.indexOf(r) === -1) {
-            arr.push(r);
-        }
-    }
-    // console.log(arr);
-    return arr;
+      
+    return r;
 }
 
-for (let i = 0; i < allEmployeesArr.length; i++) {
-    allEmployeesArr[i].calculateSalary();
-    allEmployeesArr[i].render();
-    uniqueID(allEmployeesArr[i]);
+function saveToLocalStorage() {
+
+    let allEmployeesString = JSON.stringify(allEmployeesArr); // converts and obj to a strig 
+    localStorage.setItem("employees", allEmployeesString); // because this takes only strings
 }
+
+function getLocalStorageData() {
+    let stringData = localStorage.getItem("employees"); // 1- it will return the value of all employees in string
+
+    let objectData = JSON.parse(stringData); // will convert it to object
+
+    // allEmployeesArr = objectData; // 2- update the array or objects with the data that was collected by the user
+    
+    // the object is no longer connected to its properties so it will say render not a function
+    // this can be fixed when i loop thru the array and create instances again
+    
+    // loop thru the parsed array
+    if (objectData != null){
+        for (let i = 0; i < objectData.length; i++) {
+
+            new Employee (objectData[i].fullName , objectData[i].department, objectData[i].level, objectData[i].image);
+    
+        }
+    }
+    renderAll();
+}
+
+function renderAll(){
+
+    for (let i = 0; i < allEmployeesArr.length; i++) {
+
+        allEmployeesArr[i].calculateSalary();
+        uniqueID(allEmployeesArr[i]);
+        allEmployeesArr[i].render();
+    }
+}
+
+// renderAll();
+
 
 
 formElement.addEventListener("submit", handleSubmit)
@@ -106,8 +138,13 @@ function handleSubmit(event) {
     // getting and knowing what the user entered. add event listener first and then get for each input what they entered
     // now that i got all the user input; i need to create a new object instance of my constructor 
 
-    let newEmployee = new Employee(fullName, department, level , image);
+    let newEmployee = new Employee(fullName, department, level, image);
     newEmployee.calculateSalary();
     newEmployee.render();
+    // renderAll();
+    saveToLocalStorage(); // save after everytime i add new data
+    // if i refresh the data will still in my localstorage but i will lose it on the browser and that's because i didn't get the data
+
 
 }
+getLocalStorageData();

@@ -1,25 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        table {
+            width: 100%;
+        }
+
+        table,
+        th,
+        td,
+        tr {
+            border: 1px solid black;
+            border-collapse: collapse;
+
+        }
+
+        #parent {
+
+            margin-top: 5%;
+        }
+        
+    </style>
+      <link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
     <header>
         <nav>
-            <a href="/"> Home </a>
-            <a href="./accounting.html"> Accounting </a>
+            <ul>
+                <li> <a href="/"> Home </a> </li>
+                <li> <a href="./accounting.html"> Accounting </a> </li>
+            </ul>
+            
         </nav>
     </header>
     <main>
+        <div id="parent">
+
+        </div>
     </main>
-    
+
     <footer>
         <a href="/"> Twitter </a>
         <a href="/"> Facebook </a>
-     <p>   &copy; All rights reserved </p>
+        <p> &copy; All rights reserved </p>
     </footer>
+    <script src="./accounting.js"></script>
 </body>
+
 </html>
