@@ -1,0 +1,44 @@
+header {
+    display: flex;
+    height: 10vh;
+    background-color: #c7c4c4;
+}
+nav {
+    width: 80%;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+nav ul li {
+    display: inline-block;
+    height: 10vh;
+    margin-top: 10px;
+
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #000;
+    width: 20vw;
+}
+
+footer {
+    margin-top: 28%;
+    height: 10vh;
+    background-color: gray;
+    text-align: center;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+form {
+
+    margin-top: 30px;
+}
